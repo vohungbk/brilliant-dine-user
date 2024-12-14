@@ -1,6 +1,10 @@
+'use client';
+
 import Image from 'next/image';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { MenuItem } from './MenuItem';
+import About from './About';
+import { motion } from 'framer-motion';
 
 interface HomeLayoutProps {
   data?: any;
@@ -9,8 +13,27 @@ interface HomeLayoutProps {
 const CategoryList = ['all', 'breakfast', 'lunch', 'dinner', 'soup'];
 
 export const HomeLayout: FC<HomeLayoutProps> = ({}) => {
+  const [isShowAbout, setIsShowAbout] = useState(false);
+
   return (
     <div className="w-full rounded-[20px] bg-[#FFFAF5B2]">
+      {!!isShowAbout && (
+        <>
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.2 }}
+          >
+            <About />
+          </motion.div>
+          <div
+            className="absolute inset-0 z-10 bg-[#040404A1]"
+            onClick={() => setIsShowAbout(false)}
+          />
+        </>
+      )}
+
       <div className="mb-8 w-full px-[25px] pt-[15px]">
         <div className="mb-8 flex items-center justify-between">
           <Image src={'/logo.webp'} alt="Logo" width={33} height={33} objectFit="cover" />
@@ -18,14 +41,15 @@ export const HomeLayout: FC<HomeLayoutProps> = ({}) => {
           <div className="flex items-center gap-2">
             <Image
               src={'/icons/info-line.webp'}
-              alt="Logo"
+              alt="Info"
               width={33}
               height={33}
               objectFit="cover"
+              onClick={() => setIsShowAbout(true)}
             />
             <Image
               src={'/icons/language.webp'}
-              alt="Logo"
+              alt="Language"
               width={33}
               height={33}
               objectFit="cover"

@@ -11,6 +11,9 @@ const config: Config = {
       colors: {
         primary: '#fe5f32',
       },
+      fontFamily: {
+        damion: ['var(--font-damion)'],
+      },
     },
   },
   plugins: [],

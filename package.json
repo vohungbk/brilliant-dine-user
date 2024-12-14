@@ -10,6 +10,7 @@
     "prettier": "prettier --write */**/*.{js,jsx,json,ts,tsx,scss,css,md}"
   },
   "dependencies": {
+    "framer-motion": "^11.14.4",
     "next": "14.2.20",
     "react": "18",
     "react-dom": "18"

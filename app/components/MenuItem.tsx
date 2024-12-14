@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 
 interface MenuItemProps {
   data?: any;
@@ -10,7 +10,7 @@ interface MenuItemProps {
 const categories = ['Vegan', 'High Fiber', 'Lactose'];
 
 export const MenuItem: FC<MenuItemProps> = ({}) => {
-  const [isShowInfo, setIsShowInfo] = useState(true);
+  const [isShowInfo, setIsShowInfo] = useState(false);
 
   return (
     <div className="relative flex h-full w-full items-end justify-between rounded-[29px] bg-[#222125] pb-5 pl-[19px] pr-4">
