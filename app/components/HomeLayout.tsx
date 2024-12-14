@@ -1,0 +1,75 @@
+import Image from 'next/image';
+import React, { FC } from 'react';
+import { MenuItem } from './MenuItem';
+
+interface HomeLayoutProps {
+  data?: any;
+}
+
+const CategoryList = ['all', 'breakfast', 'lunch', 'dinner', 'soup'];
+
+export const HomeLayout: FC<HomeLayoutProps> = ({}) => {
+  return (
+    <div className="w-full rounded-[20px] bg-[#FFFAF5B2]">
+      <div className="mb-8 w-full px-[25px] pt-[15px]">
+        <div className="mb-8 flex items-center justify-between">
+          <Image src={'/logo.webp'} alt="Logo" width={33} height={33} objectFit="cover" />
+          <h4 className="text-2xl font-medium">Menu</h4>
+          <div className="flex items-center gap-2">
+            <Image
+              src={'/icons/info-line.webp'}
+              alt="Logo"
+              width={33}
+              height={33}
+              objectFit="cover"
+            />
+            <Image
+              src={'/icons/language.webp'}
+              alt="Logo"
+              width={33}
+              height={33}
+              objectFit="cover"
+            />
+          </div>
+        </div>
+        <div className="">
+          <span className="text-xl font-normal leading-7">
+            Your Menu,
+            <br />
+          </span>
+          <span className="text-xl font-semibold leading-7">Digitally </span>
+          <span className="text-xl font-semibold leading-7 text-[#fe5f32]">
+            Delicious!
+          </span>
+        </div>
+      </div>
+      <div className="w-full pl-[25px]">
+        <div className="mb-[30px] flex flex-nowrap items-center gap-2 overflow-y-auto pb-1">
+          {CategoryList.map((item) => (
+            <div
+              key={item}
+              style={{
+                boxShadow: '0px 4px 4px 0px #00000040',
+              }}
+              className="flex h-[34px] items-center justify-center rounded-2xl bg-white px-[17px] text-center text-base font-normal"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="px-[25px]">
+        <h4 className="text-xl font-semibold text-primary underline">Lunch</h4>
+      </div>
+
+      <div className="relative mt-[71px] grid grid-cols-12 gap-3 px-[25px]">
+        <div className="col-span-6 h-[180.47px] w-full">
+          <MenuItem />
+        </div>
+        <div className="col-span-6 h-[180.47px] w-full">
+          <MenuItem />
+        </div>
+      </div>
+    </div>
+  );
+};
