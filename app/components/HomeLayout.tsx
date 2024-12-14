@@ -5,6 +5,7 @@ import React, { FC, useState } from 'react';
 import { MenuItem } from './MenuItem';
 import About from './About';
 import { motion } from 'framer-motion';
+import LanguageSelect from './LanguageSelect';
 
 interface HomeLayoutProps {
   data?: any;
@@ -16,7 +17,7 @@ export const HomeLayout: FC<HomeLayoutProps> = ({}) => {
   const [isShowAbout, setIsShowAbout] = useState(false);
 
   return (
-    <div className="w-full rounded-[20px] bg-[#FFFAF5B2]">
+    <div className="relative w-full rounded-[20px] bg-[#FFFAF5B2]">
       {!!isShowAbout && (
         <>
           <motion.div
@@ -47,13 +48,7 @@ export const HomeLayout: FC<HomeLayoutProps> = ({}) => {
               objectFit="cover"
               onClick={() => setIsShowAbout(true)}
             />
-            <Image
-              src={'/icons/language.webp'}
-              alt="Language"
-              width={33}
-              height={33}
-              objectFit="cover"
-            />
+            <LanguageSelect />
           </div>
         </div>
         <div className="">
