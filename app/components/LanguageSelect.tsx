@@ -1,30 +1,58 @@
+'use client';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../lib/utils';
+import { parseCookies, setCookie } from 'nookies';
+
+const COOKIE_NAME = 'googtrans';
 
 const languageList = [
   {
-    value: 'arabic',
+    value: 'ar',
     title: '🇸🇦 Arabic',
   },
   {
-    value: 'bengali',
+    value: 'bn',
     title: '🇧🇩 Bengali',
   },
   {
-    value: 'english',
+    value: 'en',
     title: '🇬🇧 English',
   },
   {
-    value: 'french',
+    value: 'fr',
     title: '🇫🇷 French',
   },
 ];
 
 function LanguageSelect() {
   const [isShow, setIsShow] = useState(false);
-  const [selectedLang, setSelectedLang] = useState('english');
+  const [selectedLang, setSelectedLang] = useState('en');
+
+  useEffect(() => {
+    const cookies = parseCookies();
+    const existingLanguageCookieValue = cookies[COOKIE_NAME];
+
+    let languageValue;
+    if (existingLanguageCookieValue) {
+      const sp = existingLanguageCookieValue.split('/');
+      if (sp.length > 2) {
+        languageValue = sp[2];
+      }
+    }
+    if (global.__GOOGLE_TRANSLATION_CONFIG__ && !languageValue) {
+      languageValue = global.__GOOGLE_TRANSLATION_CONFIG__.defaultLanguage;
+    }
+    if (languageValue) {
+      setSelectedLang(languageValue);
+    }
+  }, []);
+
+  const switchLanguage = (lang: string) => {
+    setCookie(null, COOKIE_NAME, '/auto/' + lang);
+    window.location.reload();
+  };
 
   return (
     <div>
@@ -48,7 +76,7 @@ function LanguageSelect() {
               style={{
                 boxShadow: '-5px 4px 4px 0px #00000066',
               }}
-              className="absolute right-2 top-8 z-20 h-[144px] w-[123px] rounded-[10px] border-[2px] border-primary bg-white"
+              className="absolute right-2 top-8 z-20 h-[144px] w-auto rounded-[10px] border-[2px] border-primary bg-white"
             >
               {languageList.map((item) => (
                 <button
@@ -61,6 +89,7 @@ function LanguageSelect() {
                   key={item.value}
                   onClick={() => {
                     setSelectedLang(item.value);
+                    switchLanguage(item.value);
                     setIsShow(false);
                   }}
                 >

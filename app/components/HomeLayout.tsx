@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { MenuItem } from './MenuItem';
 import About from './About';
 import { motion } from 'framer-motion';
@@ -13,8 +13,12 @@ interface HomeLayoutProps {
 
 const CategoryList = ['all', 'breakfast', 'lunch', 'dinner', 'soup'];
 
-export const HomeLayout: FC<HomeLayoutProps> = ({}) => {
+export const HomeLayout: FC<HomeLayoutProps> = ({ data }) => {
   const [isShowAbout, setIsShowAbout] = useState(false);
+
+  const allItems = useMemo(() => {
+    return data?.menu?.categories.flatMap((category: any) => category.items);
+  }, [data?.menu?.categories]);
 
   return (
     <div className="relative w-full rounded-[20px] bg-[#FFFAF5B2]">
@@ -26,7 +30,7 @@ export const HomeLayout: FC<HomeLayoutProps> = ({}) => {
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.2 }}
           >
-            <About />
+            <About restaurantInfo={data?.restaurant} />
           </motion.div>
           <div
             className="absolute inset-0 z-10 bg-[#040404A1]"
@@ -37,7 +41,14 @@ export const HomeLayout: FC<HomeLayoutProps> = ({}) => {
 
       <div className="mb-8 w-full px-[25px] pt-[15px]">
         <div className="mb-8 flex items-center justify-between">
-          <Image src={'/logo.webp'} alt="Logo" width={33} height={33} objectFit="cover" />
+          <Image
+            src={data?.restaurant?.logo || '/logo.webp'}
+            alt="Logo"
+            width={33}
+            height={33}
+            objectFit="cover"
+            className="h-[33px] flex-shrink-0 rounded-full"
+          />
           <h4 className="text-2xl font-medium">Menu</h4>
           <div className="flex items-center gap-2">
             <Image
@@ -81,13 +92,12 @@ export const HomeLayout: FC<HomeLayoutProps> = ({}) => {
         <h4 className="text-xl font-semibold text-primary underline">Lunch</h4>
       </div>
 
-      <div className="relative mt-[71px] grid grid-cols-12 gap-3 px-[25px]">
-        <div className="col-span-6 h-[180.47px] w-full">
-          <MenuItem />
-        </div>
-        <div className="col-span-6 h-[180.47px] w-full">
-          <MenuItem />
-        </div>
+      <div className="relative mt-[71px] grid grid-cols-12 gap-3 gap-y-20 px-[25px]">
+        {allItems?.map((item: any) => (
+          <div key={item?.item_id} className="col-span-6 h-[180.47px] w-full">
+            <MenuItem data={item} />
+          </div>
+        ))}
       </div>
     </div>
   );

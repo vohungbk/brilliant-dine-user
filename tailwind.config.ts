@@ -14,6 +14,9 @@ const config: Config = {
       fontFamily: {
         damion: ['var(--font-damion)'],
       },
+      boxShadow: {
+        popular: '0px 0px 4px 0px #A2FF8640',
+      },
     },
   },
   plugins: [],

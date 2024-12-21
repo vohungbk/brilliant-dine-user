@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins, Damion } from 'next/font/google';
 import './globals.css';
+import Script from 'next/script';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -28,7 +29,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} ${damion.variable}`}>{children}</body>
+      <Script src="/assets/lang-config.js" strategy="beforeInteractive" />
+      <Script src="/assets/translation.js" strategy="beforeInteractive" />
+      <Script
+        src="//translate.google.com/translate_a/element.js?cb=TranslateInit"
+        strategy="afterInteractive"
+      />
+      <body className={`${poppins.className} ${damion.variable}`}>
+        <div id="google_translate_element"></div>
+        {children}
+      </body>
     </html>
   );
 }

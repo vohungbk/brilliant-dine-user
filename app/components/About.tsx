@@ -1,11 +1,29 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
-function About() {
+type SocialType = {
+  link: string;
+  type: string;
+};
+
+function About({ restaurantInfo }: { restaurantInfo: any }) {
+  const { logo, opening_hr, closing_hr, phone_number, address, social_links } =
+    restaurantInfo || {};
+
+  const socialLink: SocialType[] = JSON.parse(social_links) || [];
+
   return (
     <div className="absolute top-0 z-20 h-[371px] w-full rounded-bl-[20px] rounded-br-[20px] bg-white px-[25px] py-[21px]">
       <div className="mb-[9px] flex justify-between">
-        <Image src={'/logo.webp'} alt="Logo" width={33} height={33} objectFit="cover" />
+        <Image
+          src={logo || '/logo.webp'}
+          alt="Logo"
+          width={33}
+          height={33}
+          objectFit="cover"
+          className="rounded-full"
+        />
         <h4 className="text-2xl font-medium">About</h4>
         <Image src={'/icons/si_info-line.svg'} alt="" width={33} height={33} />
       </div>
@@ -20,22 +38,29 @@ function About() {
       </p>
       <div className="mb-2.5 flex items-center gap-[9px]">
         <Image src={'/icons/clock-outline.svg'} alt="clock" width={22} height={22} />
-        <span className="text-[13px] leading-[18px]">12 PM - 10PM</span>
+        <span className="text-[13px] leading-[18px]">
+          {opening_hr} - {closing_hr}
+        </span>
       </div>
       <div className="mb-2.5 flex items-center gap-[9px]">
         <Image src={'/icons/call.svg'} alt="clock" width={22} height={22} />
-        <span className="text-[13px] leading-[18px]">+11 1234567</span>
+        <span className="text-[13px] leading-[18px]">{phone_number}</span>
       </div>
       <div className="mb-[22px] flex items-center gap-[9px]">
         <Image src={'/icons/location.svg'} alt="clock" width={22} height={22} />
-        <span className="text-[13px] leading-[18px]">
-          123 Culinary Avenue, Flavor Town, Food District, Gastronomy City, 56789
-        </span>
+        <span className="text-[13px] leading-[18px]">{address}</span>
       </div>
       <div className="flex items-center gap-1">
-        <Image src={'/icons/facebook.svg'} alt="facebook" width={18} height={18} />
-        <Image src={'/icons/instagram.svg'} alt="instagram" width={18} height={18} />
-        <Image src={'/icons/twitter.svg'} alt="twitter" width={18} height={18} />
+        {}
+        <Link href={socialLink?.find((item) => item.type === 'facebook')?.link || ''}>
+          <Image src={'/icons/facebook.svg'} alt="facebook" width={18} height={18} />
+        </Link>
+        <Link href={socialLink?.find((item) => item.type === 'instagram')?.link || ''}>
+          <Image src={'/icons/instagram.svg'} alt="instagram" width={18} height={18} />
+        </Link>
+        <Link href={socialLink?.find((item) => item.type === 'twitter')?.link || ''}>
+          <Image src={'/icons/twitter.svg'} alt="twitter" width={18} height={18} />
+        </Link>
         <span className="text-[10px] font-semibold leading-[13px] text-primary">
           /brilliantdine
         </span>
