@@ -22,7 +22,6 @@ function About({ restaurantInfo }: { restaurantInfo: any }) {
           width={33}
           height={33}
           objectFit="cover"
-          className="rounded-full"
         />
         <h4 className="text-2xl font-medium">About</h4>
         <Image src={'/icons/si_info-line.svg'} alt="" width={33} height={33} />
