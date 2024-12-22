@@ -24,7 +24,7 @@ export const ItemDetail: FC<ItemDetailProps> = ({
 }) => {
   return (
     <div className="fixed inset-0 z-50 h-screen">
-      <div className="absolute left-1/2 top-[100px] z-10 flex size-[309px] -translate-x-1/2 items-center justify-center rounded-full bg-white">
+      <div className="absolute bottom-[350px] left-1/2 z-10 flex size-[309px] -translate-x-1/2 items-center justify-center rounded-full bg-white">
         <Image
           src={image || '/images/img.png'}
           alt="Image detail"
@@ -41,7 +41,7 @@ export const ItemDetail: FC<ItemDetailProps> = ({
         variants={variants}
         className="absolute bottom-0 left-0 right-0 z-50 max-h-[596px] rounded-tl-[40px] rounded-tr-[40px] bg-[#222125] pl-[25px] pr-[23px] pt-[30px]"
       >
-        <div className="z-50 h-[596px] overflow-y-scroll">
+        <div className="z-50 h-[500px] overflow-y-scroll">
           <div className="flex justify-end">
             <Image
               onClick={handleCloseDetail}
