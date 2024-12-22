@@ -18,6 +18,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 
   const res = await fetch(
     `https://api.brilliantdine.com/restaurant/${restaurantId}/menu/${menuId}/details`,
+    { cache: 'no-store' },
   );
   const data = await res.json();
 
