@@ -1,16 +1,18 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FC, useState } from 'react';
-import { motion } from 'framer-motion';
+import TruncateMarkup from 'react-truncate-markup';
 import { cn } from '../lib/utils';
 import { ItemDetail } from './ItemDetail';
 
 interface MenuItemProps {
   data?: any;
+  currencySymbol: string;
 }
 
-export const MenuItem: FC<MenuItemProps> = ({ data }) => {
+export const MenuItem: FC<MenuItemProps> = ({ data, currencySymbol }) => {
   const [isShowInfo, setIsShowInfo] = useState(false);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const {
@@ -22,6 +24,8 @@ export const MenuItem: FC<MenuItemProps> = ({ data }) => {
     discounted_price,
     is_popular,
     allergens_info,
+    dietary_info,
+    nutri_info,
   } = data || {};
 
   const handleShowDetail = () => {
@@ -46,7 +50,7 @@ export const MenuItem: FC<MenuItemProps> = ({ data }) => {
     <>
       <div
         onClick={handleShowDetail}
-        className="relative flex h-full w-full items-end justify-between rounded-[29px] bg-[#222125] pb-5 pl-[19px] pr-4"
+        className="relative flex h-full w-full items-end justify-between rounded-[29px] bg-[#222125] pb-5 pl-2.5 pr-3"
       >
         {!!isShowInfo && (
           <motion.div
@@ -91,8 +95,10 @@ export const MenuItem: FC<MenuItemProps> = ({ data }) => {
         )}
 
         <div>
-          <p className="text-base font-medium text-white">{item_name}</p>
-          <div className="inline-flex h-[12.29px] items-center justify-start self-stretch pr-[17.74px]">
+          <TruncateMarkup lines={2}>
+            <div className="text-base font-medium text-white">{item_name}</div>
+          </TruncateMarkup>
+          <div className="inline-flex h-[12.29px] items-center justify-start self-stretch">
             <div className="flex items-center">
               <span className="mr-2 text-[10px] font-medium text-white">Price </span>
               {discounted_price > 0 && (
@@ -102,7 +108,8 @@ export const MenuItem: FC<MenuItemProps> = ({ data }) => {
                     className="absolute left-0 right-0 top-1/2 h-[1px] w-full bg-[#FF0000]"
                   />
                   <span className="text-xs font-thin leading-[18px] text-white">
-                    ${original_price}
+                    {currencySymbol}
+                    {original_price}
                   </span>
                   <div
                     style={{ rotate: '-20.3deg' }}
@@ -112,13 +119,14 @@ export const MenuItem: FC<MenuItemProps> = ({ data }) => {
               )}
 
               <span className="text-xs font-medium text-primary underline">
-                ${discounted_price > 0 ? discounted_price : original_price}
+                {currencySymbol}
+                {discounted_price > 0 ? discounted_price : original_price}
               </span>
             </div>
           </div>
         </div>
         <div
-          className="flex h-[31px] w-[31px] flex-shrink-0 items-center justify-center rounded-[54px] bg-primary"
+          className="flex h-[26px] w-[26px] flex-shrink-0 items-center justify-center rounded-[54px] bg-primary"
           onClick={(e) => {
             e.stopPropagation();
             setIsShowInfo(!isShowInfo);
@@ -163,8 +171,11 @@ export const MenuItem: FC<MenuItemProps> = ({ data }) => {
           itemName={item_name}
           itemDescription={item_description}
           allergensInfo={allergens_info}
+          dietaryInfo={dietary_info}
+          nutriInfo={nutri_info}
           handleCloseDetail={handleCloseDetail}
           image={image}
+          spicyLevel={spicy_level}
         />
       )}
     </>

@@ -1,13 +1,17 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { cn } from '../lib/utils';
 
 interface ItemDetailProps {
   handleCloseDetail: (e: any) => void;
   itemName: string;
   itemDescription: string;
   allergensInfo: string;
+  dietaryInfo: string;
   image: string;
+  nutriInfo: string;
+  spicyLevel: string;
 }
 
 const variants = {
@@ -21,6 +25,9 @@ export const ItemDetail: FC<ItemDetailProps> = ({
   itemDescription,
   image,
   allergensInfo,
+  dietaryInfo,
+  nutriInfo,
+  spicyLevel,
 }) => {
   return (
     <div className="fixed inset-0 z-50 h-screen">
@@ -56,17 +63,62 @@ export const ItemDetail: FC<ItemDetailProps> = ({
           </h4>
           <p className="font-semibold text-white">{itemDescription}</p>
           <div className="mb-[23px] mt-[29px] h-[1px] w-full bg-[#95959D]" />
-          <div className="mb-[127px] flex flex-wrap gap-[5.71px]">
-            {allergensInfo?.split(',').map((item: string) => (
+          <div className="mb-[127px] flex flex-col">
+            <h4 className="mb-1.5 text-primary">Allergens:</h4>
+            <div className="mb-5 flex flex-wrap gap-[5.71px]">
+              {allergensInfo &&
+                allergensInfo?.split(',').map((item: string) => (
+                  <div
+                    key={item}
+                    className="flex h-[34px] items-center justify-center rounded-[59px] bg-primary px-4"
+                  >
+                    <span className="text-[13px] font-bold leading-[19px] text-black">
+                      {item}
+                    </span>
+                  </div>
+                ))}
+            </div>
+            <h4 className="mb-1.5 text-primary">Dietary:</h4>
+            <div className="mb-5 flex flex-wrap gap-[5.71px]">
+              {dietaryInfo &&
+                dietaryInfo?.split(',').map((item: string) => (
+                  <div
+                    key={item}
+                    className="flex h-[34px] items-center justify-center rounded-[59px] bg-primary px-4"
+                  >
+                    <span className="text-[13px] font-bold leading-[19px] text-black">
+                      {item}
+                    </span>
+                  </div>
+                ))}
+            </div>
+            <h4 className="mb-1.5 text-primary">Nutrinal Details:</h4>
+            <div className="mb-5 flex flex-wrap gap-[5.71px]">
+              {nutriInfo &&
+                nutriInfo?.split(',').map((item: string) => (
+                  <div
+                    key={item}
+                    className="flex h-[34px] items-center justify-center rounded-[59px] bg-primary px-4"
+                  >
+                    <span className="text-[13px] font-bold leading-[19px] text-black">
+                      {item}
+                    </span>
+                  </div>
+                ))}
+            </div>
+            <h4 className="mb-1.5 flex text-primary">
+              Spicy level:{' '}
               <div
-                key={item}
-                className="flex h-[34px] items-center justify-center rounded-[59px] bg-primary px-4"
+                className={cn(
+                  'ml-2 flex items-center justify-center rounded-md px-4',
+                  { 'bg-[#2BA33780]': spicyLevel === 'low' },
+                  { 'bg-[#FFFF0080]': spicyLevel === 'medium' },
+                  { 'bg-[#FF000080]': spicyLevel === 'high' },
+                )}
               >
-                <span className="text-[13px] font-bold leading-[19px] text-black">
-                  {item}
-                </span>
+                <span className={cn('capitalize text-white')}>{spicyLevel}</span>
               </div>
-            ))}
+            </h4>
           </div>
         </div>
       </motion.div>

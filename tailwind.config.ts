@@ -17,6 +17,10 @@ const config: Config = {
       boxShadow: {
         popular: '0px 0px 4px 0px #A2FF8640',
       },
+      screens: {
+        '375': '375px',
+        '390': '390px',
+      },
     },
   },
   plugins: [],
