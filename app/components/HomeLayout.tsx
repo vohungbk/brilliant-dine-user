@@ -31,15 +31,10 @@ export const HomeLayout: FC<HomeLayoutProps> = ({ data }) => {
   }, [data?.menu?.categories]);
 
   useEffect(() => {
-    if (selectedCategory.value === 'all') {
-      const allItems = data?.menu?.categories.flatMap((category: any) => category.items);
-      setItems(allItems);
-      return;
-    }
-
     const itemsByCategory = data?.menu?.categories.find(
       (category: any) => category.id === selectedCategory.value,
     )?.items;
+
     setItems(itemsByCategory);
   }, [data?.menu?.categories, selectedCategory.value]);
 
@@ -77,7 +72,7 @@ export const HomeLayout: FC<HomeLayoutProps> = ({ data }) => {
             objectFit="cover"
             className="h-[33px] flex-shrink-0"
           />
-          <h4 className="text-2xl font-medium">Menu</h4>
+          <h4 className="text-2xl font-medium">{data?.menu?.name}</h4>
           <div className="flex items-center gap-2">
             <Image
               src={'/icons/info-line.webp'}

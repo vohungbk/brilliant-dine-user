@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FC, useState } from 'react';
 import TruncateMarkup from 'react-truncate-markup';
@@ -13,7 +12,6 @@ interface MenuItemProps {
 }
 
 export const MenuItem: FC<MenuItemProps> = ({ data, currencySymbol }) => {
-  const [isShowInfo, setIsShowInfo] = useState(false);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const {
     item_name,
@@ -29,7 +27,6 @@ export const MenuItem: FC<MenuItemProps> = ({ data, currencySymbol }) => {
   } = data || {};
 
   const handleShowDetail = () => {
-    setIsShowInfo(false);
     setIsShowDetail(true);
     document.body.classList.add('overflow-hidden');
   };
@@ -41,59 +38,12 @@ export const MenuItem: FC<MenuItemProps> = ({ data, currencySymbol }) => {
     document.body.classList.remove('overflow-hidden');
   };
 
-  const variants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-  };
-
   return (
     <>
       <div
         onClick={handleShowDetail}
         className="relative flex h-full w-full items-end justify-between rounded-[29px] bg-[#222125] pb-5 pl-2.5 pr-3"
       >
-        {!!isShowInfo && (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            transition={{ duration: 0.1, ease: 'easeOut' }}
-            variants={variants}
-            style={{ backdropFilter: 'blur(7.930069923400879px)' }}
-            className="absolute inset-0 z-10 flex flex-col rounded-[29px] bg-[#18181CCC] px-[15px] pb-[18px] pt-[21px]"
-          >
-            <div className="mb-2.5 border-b-[0.5px] border-b-[#95959D]">
-              <span className="text-[11px] font-bold text-white">{item_name}</span>
-            </div>
-            <div className="border-b-[0.5px] border-b-[#95959D] pb-1.5">
-              <p className="text-[9px] leading-[13px] text-white">{item_description}</p>
-            </div>
-            <div className="mt-auto flex items-end justify-between">
-              <div className="flex flex-wrap items-center gap-[2.64px]">
-                {allergens_info?.split(',').map((item: string) => (
-                  <div
-                    key={item}
-                    className="flex h-4 items-center justify-center rounded-[27px] bg-primary px-[9.25px] pt-px"
-                  >
-                    <span className="align-middle text-[6px] font-bold capitalize leading-[9px] text-black">
-                      {item}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <div
-                style={{ backdropFilter: 'blur(15.860139846801758px)' }}
-                className="flex h-[31px] w-[31px] flex-shrink-0 items-center justify-center rounded-full bg-primary"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsShowInfo(!isShowInfo);
-                }}
-              >
-                <Image src={'/icons/close.svg'} alt="Close" width={9.25} height={9.25} />
-              </div>
-            </div>
-          </motion.div>
-        )}
-
         <div>
           <TruncateMarkup lines={2}>
             <div className="text-base font-medium text-white">{item_name}</div>
@@ -125,20 +75,7 @@ export const MenuItem: FC<MenuItemProps> = ({ data, currencySymbol }) => {
             </div>
           </div>
         </div>
-        <div
-          className="flex h-[26px] w-[26px] flex-shrink-0 items-center justify-center rounded-[54px] bg-primary"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsShowInfo(!isShowInfo);
-          }}
-        >
-          <Image
-            src={'/icons/info-circle.webp'}
-            alt="Info circle"
-            width={12.94}
-            height={12.94}
-          />
-        </div>
+
         <div className="absolute -top-[47px] left-0 flex h-[135px] w-[135px] items-center justify-center rounded-full bg-white">
           <Image
             className="size-[113px] rounded-full"

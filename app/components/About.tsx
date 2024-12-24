@@ -8,7 +8,7 @@ type SocialType = {
 };
 
 function About({ restaurantInfo }: { restaurantInfo: any }) {
-  const { logo, opening_hr, closing_hr, phone_number, address, social_links } =
+  const { logo, opening_hr, closing_hr, phone_number, address, social_links, name } =
     restaurantInfo || {};
 
   const socialLink: SocialType[] = JSON.parse(social_links) || [];
@@ -26,15 +26,7 @@ function About({ restaurantInfo }: { restaurantInfo: any }) {
         <h4 className="text-2xl font-medium">About</h4>
         <Image src={'/icons/si_info-line.svg'} alt="" width={33} height={33} />
       </div>
-      <h4 className="font-damion text-[32px] leading-[44px] text-primary">
-        Brilliant Dine
-      </h4>
-      <p className="mb-[9px] text-[13px] leading-[18px]">
-        At Brilliant Dine, we serve a delightful fusion of flavors, crafted with the
-        finest ingredients to make every meal unforgettable. Whether you&apos;re craving
-        classic comfort food or bold, innovative dishes, our menu has something to satisfy
-        every palate.
-      </p>
+      <h4 className="font-damion text-[32px] leading-[44px] text-primary">{name}</h4>
       <div className="mb-2.5 flex items-center gap-[9px]">
         <Image src={'/icons/clock-outline.svg'} alt="clock" width={22} height={22} />
         <span className="text-[13px] leading-[18px]">
