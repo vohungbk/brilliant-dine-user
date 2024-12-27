@@ -11,9 +11,10 @@ import { getCurrencySymbols } from '../lib/common';
 
 interface HomeLayoutProps {
   data?: any;
+  categories?: any;
 }
 
-export const HomeLayout: FC<HomeLayoutProps> = ({ data }) => {
+export const HomeLayout: FC<HomeLayoutProps> = ({ data, categories = [] }) => {
   const [isShowAbout, setIsShowAbout] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<{
     value: string;
@@ -26,17 +27,26 @@ export const HomeLayout: FC<HomeLayoutProps> = ({ data }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const allItems = data?.menu?.categories.flatMap((category: any) => category.items);
+    const allItems = categories.flatMap((category: any) => category.items);
     setItems(allItems);
-  }, [data?.menu?.categories]);
+  }, [categories]);
 
   useEffect(() => {
-    const itemsByCategory = data?.menu?.categories.find(
-      (category: any) => category.id === selectedCategory.value,
-    )?.items;
+    if (selectedCategory.value !== 'all') {
+      const categoryFilter = categories.find(
+        (category: any) => category.id === selectedCategory.value,
+      );
 
-    setItems(itemsByCategory);
-  }, [data?.menu?.categories, selectedCategory.value]);
+      const itemsSort = categoryFilter?.items.sort((a: any, b: any) => {
+        return (
+          categoryFilter?.items_order.indexOf(a.id) -
+          categoryFilter?.items_order.indexOf(b.id)
+        );
+      });
+
+      setItems(itemsSort);
+    }
+  }, [categories, selectedCategory.value]);
 
   const currencySymbol = useMemo(() => {
     const currencySymbols = getCurrencySymbols();
@@ -100,7 +110,7 @@ export const HomeLayout: FC<HomeLayoutProps> = ({ data }) => {
         <div className="mb-[30px] flex flex-nowrap items-center gap-2 overflow-y-auto pb-1">
           {[
             { value: 'all', label: 'all' },
-            ...(data?.menu?.categories || [])?.map((cat: any) => ({
+            ...(categories || [])?.map((cat: any) => ({
               value: cat?.id,
               label: cat?.name,
             })),
@@ -132,7 +142,7 @@ export const HomeLayout: FC<HomeLayoutProps> = ({ data }) => {
       )}
 
       {selectedCategory.value === 'all' &&
-        data?.menu?.categories?.map((item: any) => (
+        categories?.map((item: any) => (
           <div key={item?.id} className="mb-4 flex flex-col gap-12">
             <div className="px-[25px]">
               <h4 className="text-xl font-semibold text-primary underline">
@@ -140,11 +150,18 @@ export const HomeLayout: FC<HomeLayoutProps> = ({ data }) => {
               </h4>
             </div>
             <div className="grid grid-cols-2 gap-2.5 gap-y-20 px-1">
-              {item?.items?.map((i: any) => (
-                <div key={i?.item_id} className="h-[180.47px] w-full">
-                  <MenuItem data={i} currencySymbol={currencySymbol} />
-                </div>
-              ))}
+              {item?.items
+                .sort((a: any, b: any) => {
+                  return (
+                    item?.items_order.indexOf(a.item_id) -
+                    item?.items_order.indexOf(b.item_id)
+                  );
+                })
+                ?.map((i: any) => (
+                  <div key={i?.item_id} className="h-[180.47px] w-full">
+                    <MenuItem data={i} currencySymbol={currencySymbol} />
+                  </div>
+                ))}
             </div>
           </div>
         ))}

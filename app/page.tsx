@@ -22,9 +22,16 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
   );
   const data = await res.json();
 
+  const categories = data?.menu?.categories.sort((a: any, b: any) => {
+    return (
+      data?.menu?.categories_order.indexOf(a.id) -
+      data?.menu?.categories_order.indexOf(b.id)
+    );
+  });
+
   return (
     <Suspense>
-      <HomeLayout data={data} />
+      <HomeLayout data={data} categories={categories} />
     </Suspense>
   );
 }
