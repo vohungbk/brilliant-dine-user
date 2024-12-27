@@ -87,7 +87,7 @@ export const HomeLayout: FC<HomeLayoutProps> = ({ data }) => {
         </div>
         <div className="">
           <span className="text-xl font-normal leading-7">
-            Your Menu,
+            Your {data?.menu?.name},
             <br />
           </span>
           <span className="text-xl font-semibold leading-7">Digitally </span>

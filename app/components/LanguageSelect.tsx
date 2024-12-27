@@ -9,20 +9,44 @@ const COOKIE_NAME = 'googtrans';
 
 const languageList = [
   {
-    value: 'ar',
-    title: '🇸🇦 Arabic',
-  },
-  {
-    value: 'bn',
-    title: '🇧🇩 Bengali',
-  },
-  {
     value: 'en',
     title: '🇬🇧 English',
   },
   {
     value: 'fr',
     title: '🇫🇷 French',
+  },
+  {
+    value: 'es',
+    title: '🇪🇸 Spanish',
+  },
+  {
+    value: 'de',
+    title: '🇩🇪 German',
+  },
+  {
+    value: 'it',
+    title: '🇮🇹 Italian',
+  },
+  {
+    value: 'zh',
+    title: '🇨🇳 Mandarin Chinese',
+  },
+  {
+    value: 'ja',
+    title: '🇯🇵 Japanese',
+  },
+  {
+    value: 'hi',
+    title: '🇮🇳 Hindi',
+  },
+  {
+    value: 'ar',
+    title: '🇸🇦 Arabic',
+  },
+  {
+    value: 'tr',
+    title: '🇹🇷 Turkish',
   },
 ];
 
@@ -76,7 +100,7 @@ function LanguageSelect() {
               style={{
                 boxShadow: '-5px 4px 4px 0px #00000066',
               }}
-              className="absolute right-2 top-8 z-20 h-[144px] w-auto rounded-[10px] border-[2px] border-primary bg-white"
+              className="absolute right-2 top-8 z-20 h-[144px] w-auto overflow-y-scroll rounded-[10px] border-[2px] border-primary bg-white"
             >
               {languageList.map((item) => (
                 <button

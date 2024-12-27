@@ -53,7 +53,7 @@ function About({ restaurantInfo }: { restaurantInfo: any }) {
           <Image src={'/icons/twitter.svg'} alt="twitter" width={18} height={18} />
         </Link>
         <span className="text-[10px] font-semibold leading-[13px] text-primary">
-          /brilliantdine
+          /{name}
         </span>
       </div>
     </div>
