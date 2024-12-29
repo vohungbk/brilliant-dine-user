@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { FC, useState } from 'react';
-import TruncateMarkup from 'react-truncate-markup';
 import { cn } from '../lib/utils';
 import { ItemDetail } from './ItemDetail';
 
@@ -45,9 +44,9 @@ export const MenuItem: FC<MenuItemProps> = ({ data, currencySymbol }) => {
         className="relative flex h-full w-full items-end justify-between rounded-[29px] bg-[#222125] pb-5 pl-2.5 pr-3"
       >
         <div>
-          <TruncateMarkup lines={2}>
-            <div className="text-base font-medium text-white">{item_name}</div>
-          </TruncateMarkup>
+          <div className="truncate-2-lines max-w-[150px] text-base font-medium text-white">
+            {item_name}
+          </div>
           <div className="inline-flex h-[12.29px] items-center justify-start self-stretch">
             <div className="flex items-center">
               <span className="mr-2 text-[10px] font-medium text-white">Price </span>

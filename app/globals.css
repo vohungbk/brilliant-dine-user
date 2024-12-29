@@ -18,3 +18,11 @@ body {
 .item-name {
   -webkit-line-clamp: 2;
 }
+
+.truncate-2-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -16,7 +16,6 @@
     "nookies": "^2.5.2",
     "react": "18",
     "react-dom": "18",
-    "react-truncate-markup": "^5.1.2",
     "tailwind-merge": "2.5.5"
   },
   "devDependencies": {
