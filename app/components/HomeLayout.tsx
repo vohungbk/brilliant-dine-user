@@ -27,11 +27,6 @@ export const HomeLayout: FC<HomeLayoutProps> = ({ data, categories = [] }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const allItems = categories.flatMap((category: any) => category.items);
-    setItems(allItems);
-  }, [categories]);
-
-  useEffect(() => {
     if (selectedCategory.value !== 'all') {
       const categoryFilter = categories.find(
         (category: any) => category.id === selectedCategory.value,
