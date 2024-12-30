@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { parseCookies, setCookie } from 'nookies';
 
-const COOKIE_NAME = 'googtrans';
+export const COOKIE_NAME = 'googtrans';
 
 const languageList = [
   {

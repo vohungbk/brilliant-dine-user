@@ -1,9 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
 import { ItemDetail } from './ItemDetail';
+import { parseCookies } from 'nookies';
+import { COOKIE_NAME } from './LanguageSelect';
 
 interface MenuItemProps {
   data?: any;
@@ -12,6 +14,7 @@ interface MenuItemProps {
 
 export const MenuItem: FC<MenuItemProps> = ({ data, currencySymbol }) => {
   const [isShowDetail, setIsShowDetail] = useState(false);
+  const [selectedLang, setSelectedLang] = useState('en');
   const {
     item_name,
     item_description,
@@ -24,6 +27,25 @@ export const MenuItem: FC<MenuItemProps> = ({ data, currencySymbol }) => {
     dietary_info,
     nutri_info,
   } = data || {};
+
+  useEffect(() => {
+    const cookies = parseCookies();
+    const existingLanguageCookieValue = cookies[COOKIE_NAME];
+
+    let languageValue;
+    if (existingLanguageCookieValue) {
+      const sp = existingLanguageCookieValue.split('/');
+      if (sp.length > 2) {
+        languageValue = sp[2];
+      }
+    }
+    if (global.__GOOGLE_TRANSLATION_CONFIG__ && !languageValue) {
+      languageValue = global.__GOOGLE_TRANSLATION_CONFIG__.defaultLanguage;
+    }
+    if (languageValue) {
+      setSelectedLang(languageValue);
+    }
+  }, []);
 
   const handleShowDetail = () => {
     setIsShowDetail(true);
@@ -85,8 +107,28 @@ export const MenuItem: FC<MenuItemProps> = ({ data, currencySymbol }) => {
           />
         </div>
         {is_popular && (
-          <div className="absolute right-0 top-10 h-[45px] w-6 rounded-bl-[6px] rounded-tl-[6px] bg-[#2BA33780] shadow-popular">
-            <span className="absolute -left-[6px] bottom-[17px] inline-block -rotate-90 text-[9px] font-bold leading-3 text-white">
+          <div
+            className={cn(
+              'absolute right-0 top-10 h-[45px] w-6 rounded-bl-[6px] rounded-tl-[6px] bg-[#2BA33780] shadow-popular',
+              {
+                'top-3 h-[80px]':
+                  ['fr', 'es', 'de', 'it', 'hi', 'tr'].includes(selectedLang) ||
+                  selectedLang == 'ja',
+              },
+            )}
+          >
+            <span
+              className={cn(
+                'absolute -left-[6px] bottom-[17px] inline-block -rotate-90 text-[9px] font-bold leading-3 text-white',
+                {
+                  '-right-[10px]': ['fr', 'es', 'de', 'it', 'hi', 'tr'].includes(
+                    selectedLang,
+                  ),
+                  'bottom-0 left-1.5 rotate-0': selectedLang == 'ja',
+                  'left-0': selectedLang == 'ar',
+                },
+              )}
+            >
               Popular
             </span>
           </div>

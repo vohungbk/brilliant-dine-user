@@ -61,7 +61,7 @@ export const HomeLayout: FC<HomeLayoutProps> = ({ data, categories = [] }) => {
             <About restaurantInfo={data?.restaurant} />
           </motion.div>
           <div
-            className="absolute inset-0 z-10 bg-[#040404A1]"
+            className="absolute inset-0 z-10 min-h-screen bg-[#040404A1]"
             onClick={() => setIsShowAbout(false)}
           />
         </>
